@@ -1,6 +1,7 @@
 # Connect4-WinTracker
 
 Author: Danny Peng
+
 Given the list of moves, tracks who and when a player wins
 
 All info taken from: https://www.reddit.com/r/dailyprogrammer/comments/3fva66/20150805_challenge_226_intermediate_connect_four/
