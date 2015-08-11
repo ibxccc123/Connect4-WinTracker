@@ -1,4 +1,6 @@
-A  e
+G  e
+G  b
+G  c
+A  a
 B  b
-C  c
-D
+G  g

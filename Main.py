@@ -1,7 +1,6 @@
 __author__ = 'Danny Peng'
 
 import sys
-import time
 
 #X in Grid Represents Player X
 #O in Grid Represents Player O
@@ -27,6 +26,7 @@ def decideWinner(input):
 def enterGrid(str, grid, counter):  #modifies the grid that is kept within the file-reading loop in decideWinner()
     print("Turn: ", counter)
     sys.stdout.flush()  #python needs to force print function, otherwise program ends before printing
+    #although this program does not need this flush line above
     if counter % 2 == 0:
         player = 'X'
     else:
@@ -66,8 +66,9 @@ def victoryCheck(grid, row, column):
     movingRow = row #variable for a changing row
     movingColumn = column #variable for a changing column
     horizontalCount = 1;
+    verticalCount = 1;
 
-    #checks for horizontal victory when starting row isn't 0
+    #checks for horizontal victory when starting column isn't 0
     if movingColumn != 0:
         while movingColumn != 0:
             if grid[row][movingColumn-1] == piece:
@@ -76,7 +77,7 @@ def victoryCheck(grid, row, column):
             else:
                 break
 
-        movingColumn = column #if 0 is reached or there are no (more) left matches, move back to the original row number
+        movingColumn = column #if 0 is reached or there are no (more) left matches, move back to the original column number
         if movingColumn != 6:
             while movingColumn != 6:
                 if grid[row][movingColumn+1] == piece:
@@ -84,15 +85,28 @@ def victoryCheck(grid, row, column):
                     movingColumn = movingColumn + 1
                 else:
                     break
+    #if the starting column is zero, checks for horizontal victory
     else:
-        while movingColumn != 6:  #checks for horizontal victory when starting row is 0
+        while movingColumn != 6:
             if grid[row][movingColumn+1] == piece:
                 horizontalCount = horizontalCount +1
                 movingColumn = movingColumn + 1
             else:
                 break
 
-    if horizontalCount >= 4:
+    #checks for vertical victory, which can only descend to lower rows
+    if movingRow > 2 and horizontalCount < 4 :
+        while movingRow != 0:
+            if grid[movingRow-1][column] == piece:
+                verticalCount = verticalCount + 1
+                movingRow = movingRow - 1
+            else:
+                break
+
+    #checks diagonal victories
+
+
+    if horizontalCount >= 4 or verticalCount >= 4:
         return piece
     else:
         return None
