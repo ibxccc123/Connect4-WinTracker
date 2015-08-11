@@ -51,7 +51,6 @@ def enterGrid(str, grid, counter):  #modifies the grid that is kept within the f
         if grid[row][column] is '-':
             grid[row][column] = player
             printGrid(grid)
-            sys.stdout.flush()
             piece = victoryCheck(grid, row, column) #checks to see if Player X or O has won yet
             if piece == 'X' or piece == 'O':
                 print("Player " + piece + " has won at turn ",  (counter + 1))
@@ -77,22 +76,21 @@ def victoryCheck(grid, row, column):
             else:
                 break
 
-    movingColumn = column #if 0 is reached or there are no (more) left matches, move back to the original row number
-    if movingRow != 6:
-        while movingColumn != 6:
+        movingColumn = column #if 0 is reached or there are no (more) left matches, move back to the original row number
+        if movingColumn != 6:
+            while movingColumn != 6:
+                if grid[row][movingColumn+1] == piece:
+                    horizontalCount = horizontalCount +1
+                    movingColumn = movingColumn + 1
+                else:
+                    break
+    else:
+        while movingColumn != 6:  #checks for horizontal victory when starting row is 0
             if grid[row][movingColumn+1] == piece:
                 horizontalCount = horizontalCount +1
                 movingColumn = movingColumn + 1
             else:
                 break
-
-    movingColumn = column
-    while movingColumn != 6:  #checks for horizontal victory when starting row is 0
-        if grid[row][movingColumn+1] == piece:
-            horizontalCount = horizontalCount +1
-            movingColumn = movingColumn + 1
-        else:
-            break
 
     if horizontalCount >= 4:
         return piece
