@@ -30,7 +30,7 @@ def enterGrid(str, grid, counter):  #modifies the grid that is kept within the f
     if counter % 2 == 0:
         player = 'X'
     else:
-        player = 'Y'
+        player = 'O'
     #translates the column input into the list index
     if str == 'a' or str == 'A':
         column = 0
@@ -67,6 +67,9 @@ def victoryCheck(grid, row, column):
     movingColumn = column #variable for a changing column
     horizontalCount = 1;
     verticalCount = 1;
+    diagonalCount = 1;
+    leftDiagonal = 1;
+    rightDiagonal = 1;
 
     #checks for horizontal victory when starting column isn't 0
     if movingColumn != 0:
@@ -77,7 +80,7 @@ def victoryCheck(grid, row, column):
             else:
                 break
 
-        movingColumn = column #if 0 is reached or there are no (more) left matches, move back to the original column number
+        movingColumn = column #if 0 is reached or there are no (more) matches, move back to the original column number
         if movingColumn != 6:
             while movingColumn != 6:
                 if grid[row][movingColumn+1] == piece:
@@ -104,9 +107,55 @@ def victoryCheck(grid, row, column):
                 break
 
     #checks diagonal victories
+    #checks left-down diagonals first, then left-up
+    if horizontalCount < 4 and verticalCount < 4:
 
+    #TODO: Make two variables: leftDiagonal and rightDiagonal.  The larger of the two will become diagonalCount.
+        movingRow = row
+        movingColumn = column
+        while movingColumn != 0 and movingRow != 0:
+            if grid[movingRow-1][movingColumn-1] == piece:
+                leftDiagonal = leftDiagonal + 1
+                movingColumn = movingColumn - 1
+                movingRow = movingRow -1
+            else:
+                break
 
-    if horizontalCount >= 4 or verticalCount >= 4:
+        #if 0 is reached for either row/column or there are no (more) matches, move back to the original row/column number
+        movingColumn = column
+        movingRow = row
+        while movingColumn != 6 and movingRow != 5:
+            if grid[movingRow+1][movingColumn+1] == piece:
+                leftDiagonal = leftDiagonal +1
+                movingColumn = movingColumn + 1
+                movingRow = movingRow + 1
+            else:
+                break
+
+        #checks right-down diagonals second, then right-up
+
+        movingColumn = column
+        movingRow = row
+        while movingColumn != 6 and movingRow != 5:
+            if grid[movingRow-1][movingColumn+1] == piece:
+                rightDiagonal = rightDiagonal + 1
+                movingColumn = movingColumn +1
+                movingRow = movingRow - 1
+            else: break
+
+        #if bottom-right corner is reached or there are no more matches, move back to the original and look right-up
+        movingColumn = column
+        movingRow = row
+        while movingColumn != 0 and movingRow != 5:
+            if grid[movingRow+1][movingColumn-1] == piece:
+                rightDiagonal = rightDiagonal + 1
+                movingColumn = movingColumn - 1
+                movingRow = movingRow  + 1
+            else: break
+
+        diagonalCount = max(rightDiagonal, leftDiagonal)
+
+    if horizontalCount >= 4 or verticalCount >= 4 or diagonalCount >=4:
         return piece
     else:
         return None
