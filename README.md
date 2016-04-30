@@ -58,3 +58,5 @@ B  a
 Challenge Output
 
 O won at move 11 (with c1 d2 e3 f4)
+
+Written in August 2015.
