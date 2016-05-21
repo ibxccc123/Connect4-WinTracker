@@ -4,8 +4,6 @@ Author: Danny Peng
 
 Given the list of moves that have occurred in a finished game of Connect 4, this algorithm determines which player has won and on which turn they have won.
 
-All info taken from: https://www.reddit.com/r/dailyprogrammer/comments/3fva66/20150805_challenge_226_intermediate_connect_four/
-
 The board is organized as rows as numbers 1-6 descending and columns as letters a-g. This was chosen to make the first moves in row 1.
 
     a b c d e f g
